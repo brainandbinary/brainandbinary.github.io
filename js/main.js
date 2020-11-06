@@ -27,7 +27,7 @@ $(window).on('load', function () {
 
         $("#fp-nav, .main-content").removeClass('before-loading').addClass('loaded');
 
-    },3200);
+    },3);
 
     setTimeout(function(){
 
