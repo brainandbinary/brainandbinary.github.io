@@ -135,6 +135,6 @@ $(document).ready(function(){
     /* 7. Newsletter init .................. */
     /* ------------------------------------- */
 
-    $("#notifyMe").notifyMe();
+    
 
 });
