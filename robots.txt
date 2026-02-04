@@ -1,3 +1,0 @@
-User-agent: *
-allow: /*.html
-sitemap: https://brainandbinary.com/sitemap.xml

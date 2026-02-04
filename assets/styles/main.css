@@ -1,0 +1,27 @@
+.nav-pills-rounded {
+    margin: 10px;
+    padding: 6px 15px;
+    background-color: rgb(35 36 36);
+    border-radius: 15px;
+    color: white !important;
+}
+
+[data-bs-theme=dark] {
+    background-color: #1E1E1E;
+}
+
+.nav-tabs{
+    font-size: 0.8em;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+}
+
+.dropdown-menu-dark{
+    background-color: #1E1E1E;
+    font-size: 0.8em;
+}

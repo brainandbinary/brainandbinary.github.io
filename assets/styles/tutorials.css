@@ -1,0 +1,81 @@
+.header-row {
+    display: flex;
+    justify-content: space-between; /* pushes buttons to opposite sides */
+    align-items: center;            /* vertically centers them */
+    width: 100%;
+  }
+  
+  /* Container */
+  .card-wrapper {
+    /*padding: 30px;*/
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 0fr));
+    gap: 20px;              /* maintains equal gaps */
+    margin-top: 20px;
+  }
+  
+  /* Card */
+  .feature-card {
+    width: 200px;
+    height: 130px;
+    padding: 16px;
+    background: #111;
+    border-radius: 12px;
+    color: #ffffff;
+  }
+  
+  /* Header row */
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
+  }
+  
+  /* Icon */
+  .card-icon {
+    font-size: 20px;
+  }
+  
+  /* Title */
+  .card-title {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  
+  /* Subtitle */
+  .card-subtitle {
+    font-size: 13px;
+    color: #cfcfcf;
+  }
+  
+  
+  .nav-pills-rounded {
+    margin: 0px;
+    padding: 6px 15px;
+    background-color: rgb(35 36 36);
+    border-radius: 50px;
+    color: white !important;
+  }
+  
+  .content{
+    margin-top:0px; 
+    height: 100vh;
+  }
+  
+  .sidebar{
+    width: 60px;
+    background-color: #171717;
+    position: fixed;
+    left: 0;
+    height: 100vh;
+    font-size: 13px;
+  }
+  
+  .sidebar > .nav {
+    margin-top: 50px;
+  }
+  
+  .content  .header-row  .btn{
+    color: gray;
+  }
