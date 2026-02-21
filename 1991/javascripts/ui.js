@@ -15,7 +15,7 @@ function renderPlaylist() {
 	const topic = urlParams.get('topic'); 
 	const country = urlParams.get('cn');           
 	
-	console.log(title)
+	
 	if(title){
 		$('#title').text(title);
 	}
@@ -66,10 +66,8 @@ function renderPlaylist() {
   });
 }
 
-$(function(){
-	
-	// Run the function
-	document.addEventListener('DOMContentLoaded', renderPlaylist);
+
+document.addEventListener('DOMContentLoaded', renderPlaylist);
 	
 	
-});
+
