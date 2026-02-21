@@ -68,12 +68,57 @@ async function renderPlaylist() {
         `;
 
         bar.onclick = () => {
-            console.log(`Loading: ${item.className}`);
-            // If you have a video display area:
-            // $('#video-display').html(item.youtubeIframe);
-        };
+			openVideoModal(item.className, item.youtubeIframe);
+	    };
 
         container.appendChild(bar);
+		
+		
+		
+		
+		
+		/// modal for displaying youtube video
+		function openVideoModal(title, iframeMarkup) {
+			// 1. Create a unique ID for this modal instance
+			const modalId = 'videoModal-' + Date.now();
+
+			// 2. The Modal HTML String
+			const modalHTML = `
+			<div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
+				<div class="modal-dialog modal-lg modal-dialog-centered">
+					<div class="modal-content bg-dark text-white">
+						<div class="modal-header border-secondary">
+							<h5 class="modal-title">${title}</h5>
+							<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body p-0">
+							<div class="ratio ratio-16x9">
+								${iframeMarkup}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>`;
+
+			// 3. Append to body
+			document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+			// 4. Initialize and Show Bootstrap Modal
+			const modalElement = document.getElementById(modalId);
+			const bsModal = new bootstrap.Modal(modalElement);
+			bsModal.show();
+
+			// 5. Cleanup: Remove from DOM after it's hidden to save memory
+			modalElement.addEventListener('hidden.bs.modal', function () {
+				modalElement.remove();
+			});
+		}
+		
+		////
+		
+		
+		
+		
     });
 }
 
