@@ -20,7 +20,40 @@ function renderPlaylist() {
 		$('#title').text(title);
 	}
 	
-	
+	let url;
+	let tutorials=[];
+ 
+   if(topic=='listening'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/listening.json';
+   }
+   
+   if(topic=='reading'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/reading.json';
+   }
+   
+   if(topic=='writing'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/writing.json';
+   }
+   
+   if(topic=='speaking'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/speaking.json';
+   }
+   
+   if(topic=='basic-speaking'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/basic-speaking.json';
+   }
+ 
+   if(topic=='basic-english'){
+	   url = 'https://brainandbinary.github.io/1991/javascripts/basic-english.json';
+   }
+ 
+   try{
+	    const response = await fetch(url);
+		// 1. 'data' will be the array [ {className: ...}, {className: ...} ]
+		tutorials = await response.json(); 
+   }catch(e){
+	   console.log(e)
+   }
 	
 	
   const container = document.getElementById('list-wrapper');
