@@ -1,5 +1,6 @@
 // 1. Mark the function as ASYNC
 async function renderPlaylist() {
+	console.log('ednet ui js is loaded')
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title'); 
     const topic = urlParams.get('topic'); 
@@ -76,4 +77,4 @@ async function renderPlaylist() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', renderPlaylist);
+renderPlaylist();
