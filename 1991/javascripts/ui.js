@@ -15,6 +15,7 @@ function renderPlaylist() {
 	const topic = urlParams.get('topic'); 
 	const country = urlParams.get('cn');           
 	
+	console.log(title)
 	if(title){
 		$('#title').text(title);
 	}
