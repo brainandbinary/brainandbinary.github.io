@@ -1,6 +1,27 @@
 
 // 2. The function to render the list
 function renderPlaylist() {
+	
+	
+
+	// 1. Get the query string (e.g., "?product=vanilla&id=42")
+	const queryString = window.location.search;
+
+	// 2. Create the URLSearchParams object
+	const urlParams = new URLSearchParams(queryString);
+
+	// 3. Get specific values
+	const title = urlParams.get('title'); 
+	const topic = urlParams.get('topic'); 
+	const country = urlParams.get('cn');           
+	
+	if(title){
+		$('#title').text(title);
+	}
+	
+	
+	
+	
   const container = document.getElementById('list-wrapper');
   
   // Clear existing content (optional)
@@ -44,5 +65,10 @@ function renderPlaylist() {
   });
 }
 
-// Run the function
-document.addEventListener('DOMContentLoaded', renderPlaylist);
+$(function(){
+	
+	// Run the function
+	document.addEventListener('DOMContentLoaded', renderPlaylist);
+	
+	
+});
