@@ -14,5 +14,9 @@
   {
     "className": "Reading Module: Sentence completion/Gap completion explained clearly",
     "youtubeIframe": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/VZjgszW1hZw?si=UuEg78yspM-Afx7Z\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  },
+  {
+    "className": "Reading Module: Summary completion explained clearly",
+    "youtubeIframe": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LywW3g06tvk?si=5NR9LZZ08bmRTDMg\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
   }
 ]
