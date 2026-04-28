@@ -1,11 +1,10 @@
-
+let tutorials = [];
 
 async function renderPlaylist() {
     console.log('ednet ui js is loaded')
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title'); 
     const topic = urlParams.get('topic'); 
-    let tutorials = [];
     
     if(title) {
         $('#title').text(title);
@@ -40,48 +39,57 @@ async function renderPlaylist() {
     const container = document.getElementById('list-wrapper');
     if (!container) return;
     
+    // --- 1. SET CONTAINER TO GRID ---
     container.innerHTML = '';
-    
+    container.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    `;
+
     tutorials.forEach((item, index) => {
-        // --- LOGIC TO EXTRACT THUMBNAIL ---
-        // Extracts the ID from strings like "https://www.youtube.com/embed/K5foblC0q70?si=..."
+        // Extract Video ID for Thumbnail
         const videoIdMatch = item.youtubeIframe.match(/\/embed\/([^?"]+)/);
         const videoId = videoIdMatch ? videoIdMatch[1] : "";
-        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
         const bar = document.createElement('div');
-        bar.className = 'playlist-bar';
+        bar.className = 'playlist-card'; // Changed name for clarity
         
-        // Updated CSS to accommodate the image
+        // --- 2. UPDATED CARD STYLING (Vertical Layout) ---
         bar.style.cssText = `
             display: flex;
-            align-items: center;
-            padding: 10px;
-            margin-bottom: 12px;
-            background-color: #2a2a2a;
-            color: white;
-            border-radius: 12px;
+            flex-direction: column;
             cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s;
             font-family: sans-serif;
-            border: 1px solid #3d3d3d;
+            color: white;
         `;
 
-        // Updated HTML with the Thumbnail Cover
+        // --- 3. UPDATED HTML (Image on top, Title below) ---
         bar.innerHTML = `
-            <div style="position: relative; margin-right: 15px; flex-shrink: 0;">
-                <img src="${thumbnailUrl}" alt="cover" style="width: 120px; height: 68px; border-radius: 8px; object-fit: cover; display: block;">
-                <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.8); color: white; font-size: 10px; padding: 2px 5px; border-radius: 4px;">▶</div>
+            <div style="position: relative; width: 100%; aspect-ratio: 16/9; margin-bottom: 12px; overflow: hidden; border-radius: 12px;">
+                <img src="${thumbnailUrl}" alt="cover" style="width: 100%; height: 100%; object-fit: cover; background-color: #333;">
+                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; font-size: 12px; padding: 2px 6px; border-radius: 4px; font-weight: bold;">
+                    Play
+                </div>
             </div>
-            <div style="flex-grow: 1;">
-                <div style="font-size: 0.85em; opacity: 0.6; margin-bottom: 4px;">Lesson ${index + 1}</div>
-                <div style="font-weight: 500; line-height: 1.3;">${item.className}</div>
+            <div style="display: flex; gap: 12px;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: #444; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.8em; font-weight: bold; color: #aaa;">
+                    ${index + 1}
+                </div>
+                <div style="flex-grow: 1;">
+                    <div style="font-weight: 600; font-size: 1rem; line-height: 1.4; color: #f1f1f1; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        ${item.className}
+                    </div>
+                    <div style="font-size: 0.85rem; color: #aaa;">Educational Series</div>
+                </div>
             </div>
         `;
 
-        // Hover effect logic
-        bar.onmouseenter = () => { bar.style.background = '#383838'; bar.style.transform = 'scale(1.01)'; };
-        bar.onmouseleave = () => { bar.style.background = '#2a2a2a'; bar.style.transform = 'scale(1)'; };
+        bar.onmouseenter = () => { bar.style.transform = 'scale(1.03)'; };
+        bar.onmouseleave = () => { bar.style.transform = 'scale(1)'; };
 
         bar.onclick = () => {
             openVideoModal(item.className, item.youtubeIframe);
