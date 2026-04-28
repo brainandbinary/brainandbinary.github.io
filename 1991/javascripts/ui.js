@@ -5,6 +5,7 @@ async function renderPlaylist() {
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title'); 
     const topic = urlParams.get('topic'); 
+    let tutorials = [];
     
     if(title) {
         $('#title').text(title);
@@ -40,7 +41,7 @@ async function renderPlaylist() {
     if (!container) return;
     
     container.innerHTML = '';
-    let tutorials = [];
+    
     tutorials.forEach((item, index) => {
         // --- LOGIC TO EXTRACT THUMBNAIL ---
         // Extracts the ID from strings like "https://www.youtube.com/embed/K5foblC0q70?si=..."
