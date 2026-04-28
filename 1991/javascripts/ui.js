@@ -1,6 +1,7 @@
-// 1. Mark the function as ASYNC
+
+
 async function renderPlaylist() {
-	console.log('ednet ui js is loaded')
+    console.log('ednet ui js is loaded')
     const urlParams = new URLSearchParams(window.location.search);
     const title = urlParams.get('title'); 
     const topic = urlParams.get('topic'); 
@@ -9,7 +10,6 @@ async function renderPlaylist() {
         $('#title').text(title);
     }
 
-    // 2. Map topics to their JSON files
     const topicFiles = {
         'listening': 'listening.json',
         'reading': 'reading.json',
@@ -25,14 +25,10 @@ async function renderPlaylist() {
         return; 
     }
 
-    // 3. Add cache busting version
     const version = new Date().getTime();
     const url = `https://brainandbinary.github.io/1991/javascripts/${fileName}?v=${version}`;
-    
-    let tutorials = [];
 
     try {
-        // Now 'await' will work because the function is 'async'
         const response = await fetch(url);
         if (!response.ok) throw new Error("Network response was not ok");
         tutorials = await response.json(); 
@@ -44,81 +40,81 @@ async function renderPlaylist() {
     if (!container) return;
     
     container.innerHTML = '';
-
+    let tutorials = [];
     tutorials.forEach((item, index) => {
+        // --- LOGIC TO EXTRACT THUMBNAIL ---
+        // Extracts the ID from strings like "https://www.youtube.com/embed/K5foblC0q70?si=..."
+        const videoIdMatch = item.youtubeIframe.match(/\/embed\/([^?"]+)/);
+        const videoId = videoIdMatch ? videoIdMatch[1] : "";
+        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+
         const bar = document.createElement('div');
         bar.className = 'playlist-bar';
+        
+        // Updated CSS to accommodate the image
         bar.style.cssText = `
             display: flex;
             align-items: center;
-            padding: 15px;
-            margin-bottom: 10px;
+            padding: 10px;
+            margin-bottom: 12px;
             background-color: #2a2a2a;
             color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: transform 0.2s, background 0.2s;
             font-family: sans-serif;
+            border: 1px solid #3d3d3d;
         `;
 
+        // Updated HTML with the Thumbnail Cover
         bar.innerHTML = `
-            <span style="margin-right: 15px; opacity: 0.5;">${index + 1}</span>
-            <span style="flex-grow: 1; font-weight: 500;">${item.className}</span>
-            <span style="font-size: 0.8em; color: #4CAF50;">▶ Play</span>
+            <div style="position: relative; margin-right: 15px; flex-shrink: 0;">
+                <img src="${thumbnailUrl}" alt="cover" style="width: 120px; height: 68px; border-radius: 8px; object-fit: cover; display: block;">
+                <div style="position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.8); color: white; font-size: 10px; padding: 2px 5px; border-radius: 4px;">▶</div>
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="font-size: 0.85em; opacity: 0.6; margin-bottom: 4px;">Lesson ${index + 1}</div>
+                <div style="font-weight: 500; line-height: 1.3;">${item.className}</div>
+            </div>
         `;
+
+        // Hover effect logic
+        bar.onmouseenter = () => { bar.style.background = '#383838'; bar.style.transform = 'scale(1.01)'; };
+        bar.onmouseleave = () => { bar.style.background = '#2a2a2a'; bar.style.transform = 'scale(1)'; };
 
         bar.onclick = () => {
-			openVideoModal(item.className, item.youtubeIframe);
-	    };
+            openVideoModal(item.className, item.youtubeIframe);
+        };
 
         container.appendChild(bar);
-		
-		
-		
-		
-		
-		/// modal for displaying youtube video
-		function openVideoModal(title, iframeMarkup) {
-			// 1. Create a unique ID for this modal instance
-			const modalId = 'videoModal-' + Date.now();
+        
+        function openVideoModal(title, iframeMarkup) {
+            const modalId = 'videoModal-' + Date.now();
+            const modalHTML = `
+            <div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content bg-dark text-white">
+                        <div class="modal-header border-secondary">
+                            <h5 class="modal-title">${title}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="ratio ratio-16x9">
+                                ${iframeMarkup}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 
-			// 2. The Modal HTML String
-			const modalHTML = `
-			<div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
-				<div class="modal-dialog modal-lg modal-dialog-centered">
-					<div class="modal-content bg-dark text-white">
-						<div class="modal-header border-secondary">
-							<h5 class="modal-title">${title}</h5>
-							<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-						</div>
-						<div class="modal-body p-0">
-							<div class="ratio ratio-16x9">
-								${iframeMarkup}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>`;
-
-			// 3. Append to body
-			document.body.insertAdjacentHTML('beforeend', modalHTML);
-
-			// 4. Initialize and Show Bootstrap Modal
-			const modalElement = document.getElementById(modalId);
-			const bsModal = new bootstrap.Modal(modalElement);
-			bsModal.show();
-
-			// 5. Cleanup: Remove from DOM after it's hidden to save memory
-			modalElement.addEventListener('hidden.bs.modal', function () {
-				modalElement.remove();
-			});
-		}
-		
-		////
-		
-		
-		
-		
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            const modalElement = document.getElementById(modalId);
+            const bsModal = new bootstrap.Modal(modalElement);
+            bsModal.show();
+            modalElement.addEventListener('hidden.bs.modal', function () {
+                modalElement.remove();
+            });
+        }
     });
 }
 
